@@ -34,3 +34,83 @@
 */
 
 // WRITE YOUR CODE BELOW:
+
+let numOfDice = document.getElementById("numOfDice");
+let rollBtn = document.getElementById("rollBtn");
+let diceResult = document.getElementById("diceResult");
+let diceImages = document.getElementById("diceImages");
+
+rollBtn.onclick = function () {
+    let howMany = Number(numOfDice.value);
+    let values = [];
+    let images = [];
+
+    for (let i = 0; i < howMany; i++) {
+        let number = Math.floor(Math.random() * 6) + 1;
+        values.push(number);
+        images.push('<img src="dice_images/' + number + '.png" width="60">');
+    }
+
+    diceResult.textContent = "You rolled: " + values.join(", ");
+    diceImages.innerHTML = images.join("");
+};
+
+
+let lowercase = "abcdefghijklmnopqrstuvwxyz";
+let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let numbers = "0123456789";
+let symbols = "!@#$%^&*()_+-=";
+
+function generatePassword(length, includeLower, includeUpper, includeNumbers, includeSymbols) {
+    let allowedChars = "";
+    let password = "";
+
+    if (includeLower) {
+        allowedChars = allowedChars + lowercase;
+    }
+    if (includeUpper) {
+        allowedChars = allowedChars + uppercase;
+    }
+    if (includeNumbers) {
+        allowedChars = allowedChars + numbers;
+    }
+    if (includeSymbols) {
+        allowedChars = allowedChars + symbols;
+    }
+
+    if (length <= 0) {
+        return "Password length must be at least 1";
+    }
+    if (allowedChars.length === 0) {
+        return "Please choose at least one set of characters";
+    }
+
+    for (let i = 0; i < length; i++) {
+        let randomIndex = Math.floor(Math.random() * allowedChars.length);
+        password = password + allowedChars[randomIndex];
+    }
+
+    return password;
+}
+
+let passwordLength = document.getElementById("passwordLength");
+let includeLower = document.getElementById("includeLower");
+let includeUpper = document.getElementById("includeUpper");
+let includeNumbers = document.getElementById("includeNumbers");
+let includeSymbols = document.getElementById("includeSymbols");
+let generateBtn = document.getElementById("generateBtn");
+let passwordResult = document.getElementById("passwordResult");
+
+generateBtn.onclick = function () {
+    let length = Number(passwordLength.value);
+
+    let password = generatePassword(
+        length,
+        includeLower.checked,
+        includeUpper.checked,
+        includeNumbers.checked,
+        includeSymbols.checked
+    );
+
+    passwordResult.textContent = password;
+};
